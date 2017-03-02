@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no">
+  <title>フォーマット</title>
+  <script src="js/jquery-2.1.1.min.js"></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>title</h1>
+
+      <div class="section">
+        <h2>block01</h2>
+      </div>
+      <div class="section">
+        <h2>block02</h2>
+      </div>
+      <div class="section">
+        <h2>block03</h2>
+      </div>
+      <div class="section">
+        <h2>block04</h2>
+      </div>
+      <div class="section">
+        <h2>block05</h2>
+      </div>
+      <div class="section">
+        <h2>block06</h2>
+      </div>
+
+    </div>
+    <footer>
+      (c)fujiwara
+    </footer>
+
+    <div id="footer-fix">
+      <ul class="footer-nav">
+        <li class="footer-nav--target"><a href="#">01</a></li>
+        <li class="footer-nav--target"><a href="#">02</a></li>
+        <li class="footer-nav--target"><a href="#">03</a></li>
+        <li class="footer-nav--target"><a href="#">04</a></li>
+        <li class="footer-nav--target"><a href="#">05</a></li>
+    </div>
+  </body>
+<script>
+var scroll = (function(){
+
+  var setTimeoutId = null ; // タイマーの管理
+  var is_scrolling = false ;
+  var scroll_pos = 0;
+  var is_bottom;
+  var is_top;
+  var is_scroll_up;
+  var scroll_temp = document.documentElement.scrollTop || // IE、Firefox、Opera
+        document.body.scrollTop;
+
+  var naviHeight = $("#footer-fix").height();
+  var $target = $("#footer-fix");
+
+  var wH = window.innerHeight;
+
+  var pageHeight = document.body.clientHeight;
+
+  console.log(pageHeight+"window高さ:"+ wH);
+
+  window.addEventListener( "scroll", function() {
+    // ステータスをスクロール中に変更
+    is_scrolling = true ;
+    scroll_top = 
+        document.documentElement.scrollTop || // IE、Firefox、Opera
+        document.body.scrollTop;
+
+    console.log(scroll_top);
+
+    var showNav = function(){
+      $target.css({
+        "bottom":0
+      },500);
+    };
+    var hideNav = function(){
+      $target.css({
+        'bottom':"-" + naviHeight +"px"
+      },500);
+    };
+
+    //上にスクロールを検出
+    if(scroll_temp > scroll_top){
+      console.log("上にスクロー流");
+      showNav();
+    } else {
+      console.log("下にスクロール");
+      hideNav();
+    }
+    scroll_temp = scroll_top;
+
+
+    // setTimeoutIdの内容がある場合は、setTimeoutをキャンセル
+    if( setTimeoutId ) {
+      clearTimeout( setTimeoutId ) ;
+    }
+
+    // 新しくsetTimeoutイベントを設定
+    setTimeoutId = setTimeout( function() {
+      console.log("スクロール停止");
+      // ステータスを静止中に変更
+      is_scrolling = false ;
+
+      // setTimeoutIdを空にする
+      setTimeoutId = null ;
+    }, 500 ) ;
+
+
+
+  }) ;
+
+
+})();
+</script>
+</html>
